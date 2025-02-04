@@ -1,11 +1,13 @@
-import { Task } from "../App";
+import { FilterType, Task } from "../App";
 import { Button } from "../Button/Button";
 
 interface TodolistItemProps {
   title: string;
   tasks: Task[];
+  deleteTask: (taskId: string) => void;
+  filterTasks: (filter: FilterType) => void;
 }
-export const TodolistItem = ({ title, tasks }: TodolistItemProps) => {
+export const TodolistItem = ({ title, tasks, deleteTask, filterTasks }: TodolistItemProps) => {
   return (
     <div>
       <h3>{title}</h3>
@@ -19,16 +21,18 @@ export const TodolistItem = ({ title, tasks }: TodolistItemProps) => {
         <ul>
           {tasks.map(t => (
             <li key={t.id + "----" + self.crypto.randomUUID()}>
-              <input type="checkbox" checked={t.isDone} /> <span>{t.title}</span>
+              <input type="checkbox" checked={t.isDone} />
+              <span>{t.title}</span>
+              <Button title={"x"} onClick={() => deleteTask(t.id)} />
             </li>
           )
           )}
         </ul>
       )}
       <div>
-        <Button title={'All'} />
-        <Button title={'Active'} />
-        <Button title={'Completed'} />
+        <Button title={'All'} onClick={() => filterTasks("all")} />
+        <Button title={'Active'} onClick={() => filterTasks("active")} />
+        <Button title={'Completed'} onClick={() => filterTasks("completed")} />
       </div>
     </div>
   );
