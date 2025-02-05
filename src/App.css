@@ -10,6 +10,19 @@ input:focus {
   color: red;
 }
 
+.active-filter {
+  background-color: lightgreen;
+}
+
+.is-done {
+  opacity: 0.5;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+}
+
 /* #root {
   max-width: 1280px;
   margin: 0 auto;
