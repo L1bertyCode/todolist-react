@@ -1,8 +1,13 @@
 import { ChangeEvent } from "react";
 import { FilterValues, Task, Todolist } from "../App";
-import { Button } from "../Button/Button";
+
 import { CreateItemForm } from "../CreateItemForm/CreateItemForm";
 import { EditableSpan } from "../EditableSpan/EditableSpan";
+
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Button from '@mui/material/Button';
+
 
 interface TodolistItemProps {
   todolist: Todolist;
@@ -39,15 +44,22 @@ export const TodolistItem = ({
   const changeTodolistTitleHandler = (title: string) => {
     changeTodolistTitle(todolist.id, title);
   };
+
+  const deleteTodolistHandler = () => deleteTodolist(todolist.id);
   return (
     <div>
       <div className=
         {'container'}>
-        <EditableSpan
-          changeItem={changeTodolistTitleHandler}
-          value={todolist.title}
-        />
-        <Button title={"x"} onClick={() => deleteTodolist(todolist.id)} />
+        <h3>
+
+          <EditableSpan
+            changeItem={changeTodolistTitleHandler}
+            value={todolist.title}
+          />
+        </h3>
+        <IconButton onClick={deleteTodolistHandler}>
+          <DeleteIcon />
+        </IconButton>
       </div>
 
       <CreateItemForm createItem={createTaskHandler} />
@@ -56,7 +68,7 @@ export const TodolistItem = ({
       ) : (
         <ul>
           {tasks.map(t => {
-            const deleteTaskHadler = () => deleteTask(todolist.id, t.id);
+            const deleteTaskHandler = () => deleteTask(todolist.id, t.id);
 
             const changeTaskTitleHandler = (title: string) => {
               changeTaskTitle(todolist.id, t.id, title);
@@ -72,7 +84,9 @@ export const TodolistItem = ({
                   onChange={(e: ChangeEvent<HTMLInputElement>) => chnageTaskStatus(todolist.id, t.id, e.currentTarget.checked)}
                 />
                 <EditableSpan changeItem={changeTaskTitleHandler} value={t.title} />
-                <Button title={"x"} onClick={deleteTaskHadler} />
+                <IconButton onClick={deleteTaskHandler}>
+                  <DeleteIcon />
+                </IconButton>
               </li>
             );
           }
@@ -80,21 +94,21 @@ export const TodolistItem = ({
         </ul>
       )}
       <div>
-        <Button
-          className={todolist.filter === 'all' ? 'active-filter' : ''}
-          title={'All'}
-          onClick={() => changeFilterHandler("all")}
-        />
-        <Button
-          className={todolist.filter === 'active' ? 'active-filter' : ''}
-          title={'Active'}
-          onClick={() => changeFilterHandler("active")}
-        />
-        <Button
-          className={todolist.filter === 'completed' ? 'active-filter' : ''}
-          title={'Completed'}
-          onClick={() => changeFilterHandler("completed")}
-        />
+        <Button variant={todolist.filter === 'all' ? 'outlined' : 'text'}
+          color={'inherit'}
+          onClick={() => changeFilterHandler('all')}>
+          All
+        </Button>
+        <Button variant={todolist.filter === 'active' ? 'outlined' : 'text'}
+          color={'primary'}
+          onClick={() => changeFilterHandler('active')}>
+          Active
+        </Button>
+        <Button variant={todolist.filter === 'completed' ? 'outlined' : 'text'}
+          color={'secondary'}
+          onClick={() => changeFilterHandler('completed')}>
+          Completed
+        </Button>
       </div>
     </div>
   );

@@ -1,5 +1,7 @@
 import { ChangeEvent, KeyboardEvent, useState } from "react";
-import { Button } from "../Button/Button";
+// import { AppButton } from "../AppButton/AppButton";
+
+import Button from '@mui/material/Button';
 
 interface CreateItemFormProps {
   createItem: (title: string) => void;
@@ -32,7 +34,7 @@ export const CreateItemForm = ({ createItem }: CreateItemFormProps) => {
           }
         }}
       />
-      <Button title={"+"} onClick={createItemHandler} />
+      <Button variant="contained" onClick={createItemHandler}>+</Button>
       {error && <div className={'error-message'}>{error}</div>}
     </div>
   );

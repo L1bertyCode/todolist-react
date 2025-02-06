@@ -4,6 +4,6 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   title: string;
 };
 
-export const Button = ({ title, ...otherProps }: Props) => {
+export const AppButton = ({ title, ...otherProps }: Props) => {
   return <button {...otherProps}>{title}</button>;
 };
