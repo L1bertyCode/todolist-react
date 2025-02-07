@@ -7,6 +7,9 @@ import { EditableSpan } from "../EditableSpan/EditableSpan";
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
+import { Checkbox } from "@mui/material";
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
 
 
 interface TodolistItemProps {
@@ -66,7 +69,7 @@ export const TodolistItem = ({
       {tasks.length === 0 ? (
         <p>Тасок нет</p>
       ) : (
-        <ul>
+        <List>
           {tasks.map(t => {
             const deleteTaskHandler = () => deleteTask(todolist.id, t.id);
 
@@ -74,24 +77,21 @@ export const TodolistItem = ({
               changeTaskTitle(todolist.id, t.id, title);
             };
             return (
-              <li
+              <ListItem
                 key={t.id + "----" + self.crypto.randomUUID()}
                 className={t.isDone ? 'is-done' : ''}
               >
-                <input
-                  type="checkbox"
-                  checked={t.isDone}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => chnageTaskStatus(todolist.id, t.id, e.currentTarget.checked)}
-                />
+                <Checkbox checked={t.isDone} onChange={(e: ChangeEvent<HTMLInputElement>) => chnageTaskStatus(todolist.id, t.id, e.currentTarget.checked)} />
+
                 <EditableSpan changeItem={changeTaskTitleHandler} value={t.title} />
                 <IconButton onClick={deleteTaskHandler}>
                   <DeleteIcon />
                 </IconButton>
-              </li>
+              </ListItem>
             );
           }
           )}
-        </ul>
+        </List>
       )}
       <div>
         <Button variant={todolist.filter === 'all' ? 'outlined' : 'text'}

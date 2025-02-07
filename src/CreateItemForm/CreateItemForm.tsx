@@ -2,6 +2,7 @@ import { ChangeEvent, KeyboardEvent, useState } from "react";
 // import { AppButton } from "../AppButton/AppButton";
 
 import Button from '@mui/material/Button';
+import { TextField } from "@mui/material";
 
 interface CreateItemFormProps {
   createItem: (title: string) => void;
@@ -20,7 +21,25 @@ export const CreateItemForm = ({ createItem }: CreateItemFormProps) => {
 
   return (
     <div className={""}>
-      <input
+
+      <TextField label={'Enter a title'}
+        variant={'outlined'}
+        className={error ? 'error' : ''}
+        value={title}
+        size={'small'}
+        error={!!error}
+        helperText={error}
+        onChange={(e: ChangeEvent<HTMLInputElement>) => {
+          setTitle(e.currentTarget.value);
+          setError(null);
+
+        }}
+        onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => {
+          if (e.key === "Enter") {
+            createItemHandler();
+          }
+        }} />
+      {/* <input
         className={`input ${error && "error"}`}
         value={title}
         onChange={(e: ChangeEvent<HTMLInputElement>) => {
@@ -33,9 +52,8 @@ export const CreateItemForm = ({ createItem }: CreateItemFormProps) => {
             createItemHandler();
           }
         }}
-      />
+      /> */}
       <Button variant="contained" onClick={createItemHandler}>+</Button>
-      {error && <div className={'error-message'}>{error}</div>}
     </div>
   );
 };

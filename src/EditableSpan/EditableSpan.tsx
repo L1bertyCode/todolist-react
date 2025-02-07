@@ -1,3 +1,4 @@
+import { TextField } from "@mui/material";
 import { ChangeEvent, KeyboardEvent, useState } from "react";
 
 
@@ -16,9 +17,9 @@ export const EditableSpan = ({ value, changeItem }: EditableSpanProps) => {
     <span className={""}>
       {!isEditMode ?
         <span onDoubleClick={() => setIsEditMode(true)}>{value}</span> :
-        <input
-          autoFocus
+        <TextField variant={'outlined'}
           value={title}
+          size={'small'}
           onChange={(e: ChangeEvent<HTMLInputElement>) => setTitle(e.currentTarget.value)}
           onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => {
             if (e.key === "Enter") {
@@ -30,7 +31,9 @@ export const EditableSpan = ({ value, changeItem }: EditableSpanProps) => {
             changeItemHandler();
             setIsEditMode(false);
           }}
-        />}
+          autoFocus />
+
+      }
     </span>
   );
 };
