@@ -7,9 +7,10 @@ import { EditableSpan } from "../EditableSpan/EditableSpan";
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
-import { Checkbox } from "@mui/material";
+import { Box, Checkbox } from "@mui/material";
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+import { containerSx, getListItemSx } from "./TodolistItem.styles";
 
 
 interface TodolistItemProps {
@@ -79,7 +80,7 @@ export const TodolistItem = ({
             return (
               <ListItem
                 key={t.id + "----" + self.crypto.randomUUID()}
-                className={t.isDone ? 'is-done' : ''}
+                sx={getListItemSx(t.isDone)}
               >
                 <Checkbox checked={t.isDone} onChange={(e: ChangeEvent<HTMLInputElement>) => chnageTaskStatus(todolist.id, t.id, e.currentTarget.checked)} />
 
@@ -93,7 +94,8 @@ export const TodolistItem = ({
           )}
         </List>
       )}
-      <div>
+
+      <Box sx={containerSx}>
         <Button variant={todolist.filter === 'all' ? 'outlined' : 'text'}
           color={'inherit'}
           onClick={() => changeFilterHandler('all')}>
@@ -109,7 +111,7 @@ export const TodolistItem = ({
           onClick={() => changeFilterHandler('completed')}>
           Completed
         </Button>
-      </div>
-    </div>
+      </Box>
+    </div >
   );
 };
