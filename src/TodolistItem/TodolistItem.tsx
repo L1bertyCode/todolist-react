@@ -101,7 +101,8 @@ export const TodolistItem = ({
           onClick={() => changeFilterHandler('all')}>
           All
         </Button>
-        <Button variant={todolist.filter === 'active' ? 'outlined' : 'text'}
+        <Button
+          variant={todolist.filter === 'active' ? 'outlined' : 'text'}
           color={'primary'}
           onClick={() => changeFilterHandler('active')}>
           Active
