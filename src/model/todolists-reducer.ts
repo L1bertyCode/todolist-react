@@ -11,7 +11,8 @@ export const deleteTodolistAC = (id: string) => {
 };
 
 export const createTodolistAC = (title: string) => {
-  return { type: 'create_todolist', payload: { title } } as const;
+  const todolistId = v1();
+  return { type: 'create_todolist', payload: { title, id: todolistId } } as const;
 };
 
 export const changeTodolistTitleAC = ({ id, title }: { id: string, title: string; }) => {
@@ -38,7 +39,7 @@ export const todolistsReducer = (state: Todolist[] = initialState, action: Actio
       return state.filter(tl => tl.id !== action.payload.id);
     }
     case 'create_todolist': {
-      return [...state, { id: v1(), title: action.payload.title, filter: "all" }];
+      return [...state, { id: action.payload.id, title: action.payload.title, filter: "all" }];
     }
     case 'change_todolist_title': {
       return [...state.map(tl => tl.id === action.payload.id ? { ...tl, title: action.payload.title } : tl)];
