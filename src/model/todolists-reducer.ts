@@ -1,9 +1,8 @@
 import { v1 } from "uuid";
-import { Todolist } from "../App";
+import { FilterValues, Todolist } from "../App";
 
 
 
-type Actions = DeleteTodolistAction | CreateTodolistAction;
 
 const initialState: Todolist[] = [];
 
@@ -15,6 +14,23 @@ export const createTodolistAC = (title: string) => {
   return { type: 'create_todolist', payload: { title } } as const;
 };
 
+export const changeTodolistTitleAC = ({ id, title }: { id: string, title: string; }) => {
+  return { type: 'change_todolist_title', payload: { id, title } } as const;
+};
+
+export const changeTodolistFilterAC = ({ id, filter }: { id: string, filter: FilterValues; }) => {
+  return { type: 'change_todolist_filter', payload: { id, filter } } as const;
+};
+
+
+export type DeleteTodolistAction = ReturnType<typeof deleteTodolistAC>;
+export type CreateTodolistAction = ReturnType<typeof createTodolistAC>;
+export type ChangeTodolistTitleAction = ReturnType<typeof changeTodolistTitleAC>;
+export type ChangeTodolistFilterAction = ReturnType<typeof changeTodolistFilterAC>;
+
+type Actions = DeleteTodolistAction | CreateTodolistAction |
+  ChangeTodolistTitleAction | ChangeTodolistFilterAction;
+
 
 export const todolistsReducer = (state: Todolist[] = initialState, action: Actions): Todolist[] => {
   switch (action.type) {
@@ -24,10 +40,14 @@ export const todolistsReducer = (state: Todolist[] = initialState, action: Actio
     case 'create_todolist': {
       return [...state, { id: v1(), title: action.payload.title, filter: "all" }];
     }
+    case 'change_todolist_title': {
+      return [...state.map(tl => tl.id === action.payload.id ? { ...tl, title: action.payload.title } : tl)];
+    }
+    case 'change_todolist_filter': {
+      return [...state.map(tl => tl.id === action.payload.id ? { ...tl, filter: action.payload.filter } : tl)];
+    }
     default:
       return state;
   }
 };
 
-export type DeleteTodolistAction = ReturnType<typeof deleteTodolistAC>;
-export type CreateTodolistAction = ReturnType<typeof createTodolistAC>;
