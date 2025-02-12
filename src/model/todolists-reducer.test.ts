@@ -4,6 +4,7 @@ import { changeTodolistFilterAC, changeTodolistTitleAC, createTodolistAC, delete
 
 
 import { beforeEach, expect, test } from 'vitest';
+import { deleteTaskAC, tasksReducer } from './tasks-reducer';
 
 let todolistId1: string;
 let todolistId2: string;

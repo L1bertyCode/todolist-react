@@ -56,24 +56,6 @@ export const App = () => {
   // const todolistId2 = v1();
   const [todolists, dispatchToTodolists] = useReducer(todolistsReducer, []);
   const [tasks, setTasks] = useState<TasksState>({});
-  // const [todolists, setTodolists] = useState<Todolist[]>([
-  //   { id: todolistId1, title: 'What to learn', filter: 'all' },
-  //   { id: todolistId2, title: 'What to buy', filter: 'all' },
-  // ]);
-
-
-  // const [tasks, setTasks] = useState<TasksState>({
-  //   [todolistId1]: [
-  //     { id: v1(), title: 'HTML&CSS', isDone: true },
-  //     { id: v1(), title: 'JS', isDone: true },
-  //     { id: v1(), title: 'ReactJS', isDone: false },
-  //   ],
-  //   [todolistId2]: [
-  //     { id: v1(), title: 'HTML&CSS', isDone: true },
-  //     { id: v1(), title: 'JS', isDone: true },
-  //     { id: v1(), title: 'ReactJS', isDone: false },
-  //   ],
-  // });
 
 
   const deleteTask = (todolistId: string, taskId: string) => {
