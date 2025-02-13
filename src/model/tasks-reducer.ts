@@ -4,6 +4,8 @@ import { CreateTodolistAction, DeleteTodolistAction } from './todolists-reducer'
 
 const initialState: TasksState = {};
 
+
+
 export const deleteTaskAC = ({ todolistId, taskId }: { todolistId: string, taskId: string; }) => {
   return {
     type: "delete_task",
@@ -24,12 +26,37 @@ export const createTaskAC = ({ todolistId, title }: { todolistId: string, title:
   } as const;
 };
 
+export const changeTaskStatusAC = ({ todolistId, taskId, isDone }: { todolistId: string, taskId: string, isDone: boolean; }) => {
+  return {
+    type: "change_task_status",
+    payload: {
+      todolistId: todolistId, taskId: taskId,
+      isDone: isDone
+    }
+  } as const;
+};
+
+export const changeTaskTitleAC = ({ todolistId, taskId, title }: { todolistId: string, taskId: string, title: string; }) => {
+  return {
+    type: "change_task_title",
+    payload: {
+      todolistId: todolistId, taskId: taskId,
+      title: title
+    }
+  } as const;
+};
+
+
 export type DeleteTaskAction = ReturnType<typeof deleteTaskAC>;
 export type CreateTaskAction = ReturnType<typeof createTaskAC>;
+export type ChangeTaskStatusAction = ReturnType<typeof changeTaskStatusAC>;
+export type ChangeTaskTitleAction = ReturnType<typeof changeTaskTitleAC>;
 
 
 type Actions = CreateTodolistAction | DeleteTodolistAction | DeleteTaskAction |
-  CreateTaskAction;
+  CreateTaskAction |
+  ChangeTaskStatusAction |
+  ChangeTaskTitleAction;
 
 export const tasksReducer = (state: TasksState = initialState, action: Actions): TasksState => {
   switch (action.type) {
@@ -52,6 +79,23 @@ export const tasksReducer = (state: TasksState = initialState, action: Actions):
         [action.payload.todolistId]: [
           { id: v1(), title: action.payload.title, isDone: false },
           ...state[action.payload.todolistId]
+        ]
+      };
+    }
+    case "change_task_status": {
+      return {
+        ...state,
+        [action.payload.todolistId]:
+          [
+            ...state[action.payload.todolistId].map(t => t.id === action.payload.taskId ? { ...t, isDone: action.payload.isDone } : t)
+          ]
+      };
+    }
+    case "change_task_title": {
+      return {
+        ...state,
+        [action.payload.todolistId]: [
+          ...state[action.payload.todolistId].map(t => t.id === action.payload.taskId ? { ...t, title: action.payload.title } : t)
         ]
       };
     }
