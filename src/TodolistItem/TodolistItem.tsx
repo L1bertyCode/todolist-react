@@ -1,5 +1,5 @@
 import { ChangeEvent } from "react";
-import { FilterValues, Task, Todolist } from "../App";
+import { FilterValues, Task, Todolist } from "../app/App";
 
 import { CreateItemForm } from "../CreateItemForm/CreateItemForm";
 import { EditableSpan } from "../EditableSpan/EditableSpan";

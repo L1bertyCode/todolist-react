@@ -1,18 +1,18 @@
-import { v1 } from 'uuid';
-import type { Todolist } from '../App';
+
+import { nanoid } from '@reduxjs/toolkit';
+import type { Todolist } from '../app/App';
 import { changeTodolistFilterAC, changeTodolistTitleAC, createTodolistAC, deleteTodolistAC, todolistsReducer } from './todolists-reducer';
 
 
 import { beforeEach, expect, test } from 'vitest';
-import { deleteTaskAC, tasksReducer } from './tasks-reducer';
 
 let todolistId1: string;
 let todolistId2: string;
 let startState: Todolist[] = [];
 
 beforeEach(() => {
-  todolistId1 = v1();
-  todolistId2 = v1();
+  todolistId1 = nanoid();
+  todolistId2 = nanoid();
 
   startState = [
     { id: todolistId1, title: 'What to learn', filter: 'all' },
@@ -29,7 +29,7 @@ test('correct todolist should be deleted', () => {
   //     id: todolistId1,
   //   },
   // } as const;
-  const endState = todolistsReducer(startState, deleteTodolistAC(todolistId1));
+  const endState = todolistsReducer(startState, deleteTodolistAC({ id: todolistId1 }));
 
   // 3. Проверка, что действие измененило state соответствующим образом
   // в массиве останется один тудулист
