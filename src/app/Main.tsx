@@ -1,10 +1,10 @@
 import { useAppDispatch } from "@/common/hooks/useAppDispatch";
-import { CreateItemForm } from "@/CreateItemForm/CreateItemForm";
+import { CreateItemForm } from "@/common/components/CreateItemForm/CreateItemForm";
 
 import { Container, Grid2 as Grid, } from "@mui/material";
 
-import { createTodolistAC } from "@/model/todolists-reducer";
-import { Todolists } from "@/Todolists/Todolists";
+import { createTodolistAC } from "@/features/Todolists/model/todolists-reducer";
+import { Todolists } from "@/features/Todolists/ui/Todolists";
 
 
 export const Main = () => {
@@ -19,7 +19,7 @@ export const Main = () => {
   return (
     <Container maxWidth={"lg"} >
       <Grid container sx={{ mb: '30px' }}>
-        <CreateItemForm createItem={createTodolist} />
+        <CreateItemForm onChange={createTodolist} />
       </Grid>
       <Grid container spacing={4}>
         <Todolists />

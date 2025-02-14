@@ -5,8 +5,8 @@ import { useAppSelector } from "@/common/hooks/useAppSelector";
 import { getTheme } from "@/common/theme/theme";
 import { AppBar, Container, IconButton, Switch, Toolbar } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
-import { NavButton } from "@/NavButton/NavButton";
-import { containerSx } from "@/TodolistItem/TodolistItem.styles";
+import { NavButton } from "@/common/components/NavButton/NavButton";
+import { containerSx } from '@/common/styles/container.styles';
 
 export const Header = () => {
   const themeMode = useAppSelector(selectThemeMode);

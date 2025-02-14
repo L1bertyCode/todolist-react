@@ -1,7 +1,7 @@
 
 import { nanoid } from '@reduxjs/toolkit';
-import type { Todolist } from '../app/App';
-import { changeTodolistFilterAC, changeTodolistTitleAC, createTodolistAC, deleteTodolistAC, todolistsReducer } from './todolists-reducer';
+import type { Todolist } from '../../../../app/App';
+import { changeTodolistFilterAC, changeTodolistTitleAC, createTodolistAC, deleteTodolistAC, todolistsReducer } from '../todolists-reducer';
 
 
 import { beforeEach, expect, test } from 'vitest';

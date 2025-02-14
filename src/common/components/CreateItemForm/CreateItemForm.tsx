@@ -5,14 +5,14 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 import IconButton from '@mui/material/IconButton';
 
 interface CreateItemFormProps {
-  createItem: (title: string) => void;
+  onChange: (title: string) => void;
 };
-export const CreateItemForm = ({ createItem }: CreateItemFormProps) => {
+export const CreateItemForm = ({ onChange }: CreateItemFormProps) => {
   const [title, setTitle] = useState<string>("");
   const [error, setError] = useState<string | null>("");
   const createItemHandler = () => {
     if (title.trim() !== "") {
-      createItem(title);
+      onChange(title);
       setTitle("");
     } else {
       setError('Title is required');
