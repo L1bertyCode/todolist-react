@@ -28,7 +28,7 @@ export const tasksReducer = createReducer(initialState, builder => {
     const index =
       state[action.payload.todolistId].findIndex(t => t.id === action.payload.taskId);
     if (index !== -1) {
-      state[action.payload.todolistId].slice(index, 1);
+      state[action.payload.todolistId].splice(index, 1);
     }
   });
 

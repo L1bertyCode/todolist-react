@@ -4,13 +4,13 @@ import { ChangeEvent, KeyboardEvent, useState } from "react";
 
 interface EditableSpanProps {
   value: string;
-  changeItem: (title: string) => void;
+  onChange: (title: string) => void;
 };
-export const EditableSpan = ({ value, changeItem }: EditableSpanProps) => {
+export const EditableSpan = ({ value, onChange }: EditableSpanProps) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [title, setTitle] = useState<string>(value);
-  const changeItemHandler = () => {
-    changeItem(title);
+  const onChangeHandler = () => {
+    onChange(title);
   };
 
   return (
@@ -23,12 +23,12 @@ export const EditableSpan = ({ value, changeItem }: EditableSpanProps) => {
           onChange={(e: ChangeEvent<HTMLInputElement>) => setTitle(e.currentTarget.value)}
           onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => {
             if (e.key === "Enter") {
-              changeItemHandler();
+              onChangeHandler();
               setIsEditMode(false);
             }
           }}
           onBlur={() => {
-            changeItemHandler();
+            onChangeHandler();
             setIsEditMode(false);
           }}
           autoFocus />
