@@ -36,7 +36,6 @@ input:focus {
 .container {
   display: flex;
   align-items: center;
-
 }
 
 .app {

@@ -1,39 +1,41 @@
-import { FilterValues, Todolist } from "@/app/App";
-import { useAppDispatch } from "@/common/hooks/useAppDispatch";
-import { changeTodolistFilterAC } from "@/features/Todolists/model/todolists-reducer";
-import { containerSx } from '@/common/styles/container.styles';
-import { Box, Button } from "@mui/material";
+import { FilterValues, Todolist } from "@/app/App"
+import { useAppDispatch } from "@/common/hooks"
+import { changeTodolistFilterAC } from "@/features/Todolists/model/todolists-reducer"
+import { containerSx } from "@/common/styles"
+import { Box, Button } from "@mui/material"
 
 type Props = {
-  todolist: Todolist;
-};
+  todolist: Todolist
+}
 
 export const FilterButtons = ({ todolist }: Props) => {
-  const { id, filter } = todolist;
+  const { id, filter } = todolist
 
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch()
 
   const changeFilter = (filter: FilterValues) => {
-    dispatch(changeTodolistFilterAC({ id, filter }));
-  };
+    dispatch(changeTodolistFilterAC({ id, filter }))
+  }
 
   return (
     <Box sx={containerSx}>
-      <Button variant={filter === 'all' ? 'outlined' : 'text'}
-        color={'inherit'}
-        onClick={() => changeFilter('all')}>
+      <Button variant={filter === "all" ? "outlined" : "text"} color={"inherit"} onClick={() => changeFilter("all")}>
         All
       </Button>
-      <Button variant={filter === 'active' ? 'outlined' : 'text'}
-        color={'primary'}
-        onClick={() => changeFilter('active')}>
+      <Button
+        variant={filter === "active" ? "outlined" : "text"}
+        color={"primary"}
+        onClick={() => changeFilter("active")}
+      >
         Active
       </Button>
-      <Button variant={filter === 'completed' ? 'outlined' : 'text'}
-        color={'secondary'}
-        onClick={() => changeFilter('completed')}>
+      <Button
+        variant={filter === "completed" ? "outlined" : "text"}
+        color={"secondary"}
+        onClick={() => changeFilter("completed")}
+      >
         Completed
       </Button>
     </Box>
-  );
-};
+  )
+}

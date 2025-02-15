@@ -1,9 +1,9 @@
-import { ButtonHTMLAttributes } from "react";
+import { ButtonHTMLAttributes } from "react"
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
-  title: string;
-};
+  title: string
+}
 
 export const AppButton = ({ title, ...otherProps }: Props) => {
-  return <button {...otherProps}>{title}</button>;
-};
+  return <button {...otherProps}>{title}</button>
+}
