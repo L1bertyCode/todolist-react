@@ -7,9 +7,13 @@ import { selectThemeMode } from "./app-selectors"
 import { getTheme } from "@/common/theme"
 import { Header } from "@/common/components/Header"
 import { Main } from "./Main"
-import { useAppSelector } from "@/common/hooks"
+import { useAppDispatch, useAppSelector } from "@/common/hooks"
+import { useEffect } from "react"
 
-export type Todolist = {
+import { fetchTodolistsThunk } from "@/features/Todolists/model/todolists-reducer"
+import { DomainTask } from "@/features/Todolists/api/tasksApi.types"
+
+export type TodolistType = {
   id: string
   title: string
   filter: FilterValues
@@ -21,13 +25,20 @@ export interface Task {
   isDone: boolean
 }
 
-export type TasksState = Record<string, Task[]>
+export type TasksState = Record<string, DomainTask[]>
 
 export type FilterValues = "all" | "active" | "completed"
 
 export const App = () => {
   const themeMode = useAppSelector(selectThemeMode)
   const theme = getTheme(themeMode)
+
+  // const todolists = useAppSelector(selectTodolists)
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(fetchTodolistsThunk)
+  }, [dispatch])
 
   return (
     <ThemeProvider theme={theme}>

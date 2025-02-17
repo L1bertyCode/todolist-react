@@ -1,11 +1,13 @@
 import { type ChangeEvent, type CSSProperties, useEffect, useState } from "react"
 import Checkbox from "@mui/material/Checkbox"
-import { CreateItemForm, EditableSpan } from "@/common/components"
+import { CreateItemForm, EditableSpan, Header } from "@/common/components"
 import { Todolist } from "@/features/Todolists/api/todolistsApi.types"
 import { todolistsApi } from "@/features/Todolists/api/todolistsApi"
 import { tasksApi } from "@/features/Todolists/api/tasksApi"
 import { DomainTask, UpdateTaskModel } from "@/features/Todolists/api/tasksApi.types"
 import { TaskStatus } from "@/common/enums"
+import { CssBaseline } from "@mui/material"
+import { Main } from "./Main"
 
 export const AppHttpRequests = () => {
   const [todolists, setTodolists] = useState<Todolist[]>([])
@@ -91,7 +93,10 @@ export const AppHttpRequests = () => {
   }
 
   return (
-    <div style={{ margin: "20px" }}>
+    <div>
+      <CssBaseline />
+      <Header />
+      <Main />
       <CreateItemForm onCreateItem={createTodolist} />
       {todolists.map((todolist: Todolist) => (
         <div key={todolist.id} style={container}>
