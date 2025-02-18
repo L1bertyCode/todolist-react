@@ -7,6 +7,7 @@ import { tasksApi } from "../api/tasksApi";
 import { DomainTask, UpdateTaskModel } from "../api/tasksApi.types";
 import { TaskStatus } from "@/common/enums";
 import { RootState } from "@/app/store";
+import { CreateTodolistActionType, RemoveTodolistActionType } from "./todolists-reducer";
 
 
 const initialState: TasksState = {};
@@ -57,7 +58,7 @@ export type ChangeTaskTitleActionType = ReturnType<typeof changeTaskTitleAC>;
 export type UpdateTaskActionType = ReturnType<typeof updateTaskAC>;
 
 
-type ActionsType = SetTasksActionType | AddTaskActionType | RemoveTaskActionType | ChangeTaskStatusActionType | ChangeTaskTitleActionType | UpdateTaskActionType;
+type ActionsType = SetTasksActionType | AddTaskActionType | RemoveTaskActionType | ChangeTaskStatusActionType | ChangeTaskTitleActionType | UpdateTaskActionType | RemoveTodolistActionType | CreateTodolistActionType;
 
 
 

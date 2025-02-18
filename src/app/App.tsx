@@ -33,7 +33,6 @@ export const App = () => {
   const themeMode = useAppSelector(selectThemeMode)
   const theme = getTheme(themeMode)
 
-  // const todolists = useAppSelector(selectTodolists)
   const dispatch = useAppDispatch()
 
   useEffect(() => {

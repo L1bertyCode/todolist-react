@@ -2,7 +2,7 @@ import { FilterValues } from "@/app/App"
 import { useAppDispatch } from "@/common/hooks"
 // import { changeTodolistFilterAC } from "@/features/Todolists/model/todolists-reducer"
 import { containerSx } from "@/common/styles"
-import { DomainTodolist } from "@/features/Todolists/model/todolists-reducer";
+import { changeTodolistFilterAC, DomainTodolist } from "@/features/Todolists/model/todolists-reducer"
 import { Box, Button } from "@mui/material"
 
 type Props = {
@@ -10,13 +10,14 @@ type Props = {
 }
 
 export const FilterButtons = ({ todolist }: Props) => {
-  const { id, filter } = todolist
+  const { id, filter = "all" } = todolist
 
   const dispatch = useAppDispatch()
 
   const changeFilter = (filter: FilterValues) => {
-    // dispatch(changeTodolistFilterAC({ id, filter }))
+    dispatch(changeTodolistFilterAC({ id, filter }))
   }
+
 
   return (
     <Box sx={containerSx}>
