@@ -5,9 +5,10 @@ import type { TasksState } from "@/app/App";
 import { Dispatch } from "@reduxjs/toolkit";
 import { tasksApi } from "../api/tasksApi";
 import { DomainTask, UpdateTaskModel } from "../api/tasksApi.types";
-import { TaskStatus } from "@/common/enums";
+import { ResultCode, TaskStatus } from "@/common/enums";
 import { RootState } from "@/app/store";
 import { CreateTodolistActionType, RemoveTodolistActionType } from "./todolists-reducer";
+import { setAppErrorAC, setAppStatusAC } from "@/app/app-reducer";
 
 
 const initialState: TasksState = {};
@@ -115,7 +116,9 @@ export const tasksReducer = (
 
 
 export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
+  dispatch(setAppStatusAC('loading'));
   tasksApi.getTasks(todolistId).then(res => {
+    dispatch(setAppStatusAC('succeeded'));
     const tasks = res.data.items;
     dispatch(setTasksAC({ todolistId, tasks }));
   });
@@ -129,9 +132,24 @@ export const removeTaskTC =
   };
 
 export const addTaskTC = (arg: { title: string, todolistId: string; }) => (dispatch: Dispatch) => {
+  dispatch(setAppStatusAC('loading'));
   tasksApi.createTask(arg).then((res) => {
-    dispatch(addTaskAC({ task: res.data.data.item }));
-  });
+    if (res.data.resultCode === ResultCode.Success) {
+      dispatch(addTaskAC({ task: res.data.data.item }));
+      dispatch(setAppStatusAC('succeeded'));
+    } else {
+      if (res.data.messages.length) {
+        dispatch(setAppErrorAC(res.data.messages[0]));
+      } else {
+        dispatch(setAppErrorAC('Some error occurred'));
+      }
+      dispatch(setAppStatusAC('failed'));
+    }
+  })
+    .catch((error) => {
+      dispatch(setAppErrorAC(error.message));
+      dispatch(setAppStatusAC("failed"));
+    });
 };
 export const changeTaskStatusTC =
   (arg: { taskId: string; status: TaskStatus; todolistId: string; }) =>
@@ -201,9 +219,22 @@ export const updateTaskTC =
           startDate: task.startDate,
         };
 
-        tasksApi.updateTask({ taskId, todolistId, model }).then(() => {
-          dispatch(updateTaskAC(arg));
-        });
+        tasksApi.updateTask({ taskId, todolistId, model }).then(res => {
+          if (res.data.resultCode === ResultCode.Success) {
+            dispatch(updateTaskAC(arg));
+          } else {
+            if (res.data.messages.length) {
+              dispatch(setAppErrorAC(res.data.messages[0]));
+            } else {
+              dispatch(setAppErrorAC('Some error occurred'));
+            }
+            dispatch(setAppStatusAC('failed'));
+          }
+        })
+          .catch(error => {
+            dispatch(setAppErrorAC(error.message));
+            dispatch(setAppStatusAC('failed'));
+          });
       }
     };
 

@@ -6,8 +6,9 @@ import IconButton from "@mui/material/IconButton"
 
 interface CreateItemFormProps {
   onCreateItem: (title: string) => void
+  disabled?: boolean
 }
-export const CreateItemForm = ({ onCreateItem }: CreateItemFormProps) => {
+export const CreateItemForm = ({ onCreateItem, disabled }: CreateItemFormProps) => {
   const [title, setTitle] = useState<string>("")
   const [error, setError] = useState<string | null>("")
   const createItemHandler = () => {
@@ -38,8 +39,9 @@ export const CreateItemForm = ({ onCreateItem }: CreateItemFormProps) => {
             createItemHandler()
           }
         }}
+        disabled={disabled}
       />
-      <IconButton onClick={createItemHandler} color={"primary"}>
+      <IconButton onClick={createItemHandler} color={"primary"} disabled={disabled}>
         <AddBoxIcon />
       </IconButton>
     </div>

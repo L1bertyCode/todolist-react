@@ -49,7 +49,8 @@ beforeEach(() => {
     // ],
   };
 });
-test("test stub", () => { });
+test("test stub", () => {
+});
 // test("array should be created for new todolist", () => {
 //   const endState = tasksReducer(startState, createTodolistAC("New todolist"));
 

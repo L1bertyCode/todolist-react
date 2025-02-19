@@ -18,7 +18,6 @@ export const FilterButtons = ({ todolist }: Props) => {
     dispatch(changeTodolistFilterAC({ id, filter }))
   }
 
-
   return (
     <Box sx={containerSx}>
       <Button variant={filter === "all" ? "outlined" : "text"} color={"inherit"} onClick={() => changeFilter("all")}>

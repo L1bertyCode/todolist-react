@@ -12,6 +12,7 @@ import { useEffect } from "react"
 
 import { fetchTodolistsThunk } from "@/features/Todolists/model/todolists-reducer"
 import { DomainTask } from "@/features/Todolists/api/tasksApi.types"
+import { ErrorSnackbar } from "@/common/components/ErrorSnackbar"
 
 export type TodolistType = {
   id: string
@@ -44,6 +45,7 @@ export const App = () => {
       <CssBaseline />
       <Header />
       <Main />
+      <ErrorSnackbar />
     </ThemeProvider>
   )
 }
