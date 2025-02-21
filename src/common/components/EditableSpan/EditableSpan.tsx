@@ -4,8 +4,9 @@ import { ChangeEvent, KeyboardEvent, useState } from "react"
 interface EditableSpanProps {
   value: string
   onChange: (title: string) => void
+  disabled?: boolean
 }
-export const EditableSpan = ({ value, onChange }: EditableSpanProps) => {
+export const EditableSpan = ({ value, onChange, disabled = false }: EditableSpanProps) => {
   const [isEditMode, setIsEditMode] = useState(false)
   const [title, setTitle] = useState<string>(value)
   const onChangeHandler = () => {
@@ -15,7 +16,7 @@ export const EditableSpan = ({ value, onChange }: EditableSpanProps) => {
   return (
     <span className={""}>
       {!isEditMode ? (
-        <span onDoubleClick={() => setIsEditMode(true)}>{value}</span>
+        <span onDoubleClick={() => setIsEditMode(!disabled)}>{value}</span>
       ) : (
         <TextField
           variant={"outlined"}

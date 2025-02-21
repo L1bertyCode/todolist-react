@@ -128,8 +128,16 @@ export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
 
 export const removeTaskTC =
   (arg: { taskId: string; todolistId: string; }) => (dispatch: Dispatch) => {
-    tasksApi.deleteTask(arg).then(() => {
-      dispatch(removeTaskAC(arg));
+    dispatch(setAppStatusAC('loading'));
+    tasksApi.deleteTask(arg).then((res) => {
+      if (res.data.resultCode === ResultCode.Success) {
+        dispatch(removeTaskAC(arg));
+        dispatch(setAppStatusAC('succeeded'));
+      } else {
+        handleServerAppError(res.data, dispatch);
+      }
+    }).catch((error) => {
+      handleServerNetworkError(error, dispatch);
     });
   };
 
@@ -137,15 +145,10 @@ export const addTaskTC = (arg: { title: string, todolistId: string; }) => (dispa
   dispatch(setAppStatusAC('loading'));
   tasksApi.createTask(arg).then((res) => {
     if (res.data.resultCode === ResultCode.Success) {
-      dispatch(addTaskAC({ task: res.data.data.item }));
       dispatch(setAppStatusAC('succeeded'));
+      dispatch(addTaskAC({ task: res.data.data.item }));
     } else {
-      if (res.data.messages.length) {
-        dispatch(setAppErrorAC(res.data.messages[0]));
-      } else {
-        handleServerAppError(res.data, dispatch);
-      }
-
+      handleServerAppError(res.data, dispatch);
     }
   })
     .catch((error) => {
@@ -204,6 +207,7 @@ export const changeTaskTitleTC =
 export const updateTaskTC =
   (arg: { taskId: string; title?: string; status?: TaskStatus, todolistId: string; }) =>
     (dispatch: Dispatch, getState: () => RootState) => {
+      dispatch(setAppStatusAC('loading'));
       const { taskId, todolistId, title, status } = arg;
 
       const allTasksFromState = getState().tasks;
@@ -223,15 +227,21 @@ export const updateTaskTC =
         tasksApi.updateTask({ taskId, todolistId, model })
           .then(res => {
             if (res.data.resultCode === ResultCode.Success) {
-              dispatch(updateTaskAC(arg));
-            } else {
-              if (res.data.messages.length) {
-                dispatch(setAppErrorAC(res.data.messages[0]));
+              if (res.data.resultCode === ResultCode.Success) {
+                dispatch(updateTaskAC(arg));
               } else {
-                handleServerAppError(res.data, dispatch);
-              }
+                if (res.data.messages.length) {
+                  dispatch(setAppErrorAC(res.data.messages[0]));
+                } else {
+                  handleServerAppError(res.data, dispatch);
+                }
 
+              }
+              dispatch(setAppStatusAC('succeeded'));
+            } else {
+              handleServerAppError(res.data, dispatch);
             }
+
           })
           .catch(error => {
             handleServerNetworkError(error, dispatch);
