@@ -17,12 +17,11 @@ export const TodolistTitle = ({ todolist }: Props) => {
 
   const deleteTodolist = () => {
     dispatch(removeTodolistTC(id))
-    // dispatch(deleteTodolistAC({ id }))
+
   }
 
   const changeTodolistTitle = (title: string) => {
     dispatch(updateTodolistTitleTC({ title, id }))
-    // dispatch(changeTodolistTitleAC({ id, title }))
   }
 
   return (

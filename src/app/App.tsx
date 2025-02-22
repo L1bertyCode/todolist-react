@@ -88,6 +88,19 @@ export const App = () => {
   // const descriptions = mapArray(people, toDescription)
   // console.log(descriptions) // ["Alice is 25 years old", "Bob is 30 years old"]
 
+  // function updateArray<T, D>(arr: T[], a: D): T[] {
+
+  // }
+  // // Строки
+  // const stringArray = ["apple", "banana", "cherry"]
+  // const result1 = updateArray(stringArray, "banana") // ['apple', 'banana', 'cherry']
+  // const result2 = updateArray(stringArray, "date") // ['apple', 'banana', 'cherry', 'date']
+
+  // // Числа
+  // const numberArray = [1, 2, 3]
+  // const result3 = updateArray(numberArray, 2) // [1, 2, 3]
+  // const result4 = updateArray(numberArray, 4) // [1, 2, 3, 4]
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
